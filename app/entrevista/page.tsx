@@ -73,8 +73,8 @@ export default function Entrevista() {
 
   return (
 
-    <LayoutPage>
-      <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div>Loading...</div>}>
+      <LayoutPage>
 
         <Box sx={{
           display: 'flex',
@@ -121,7 +121,7 @@ export default function Entrevista() {
             </Stack>
           </Grow>
         </Box>
-      </Suspense>
-    </LayoutPage>
+      </LayoutPage>
+    </Suspense>
   )
 }
