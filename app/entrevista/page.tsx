@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation"
 import { useForm } from 'react-hook-form'
 
 import { Grow, LayoutPage } from '@/components'
+import { Suspense } from 'react'
 
 export default function Entrevista() {
   const searchParams = useSearchParams()
@@ -71,52 +72,56 @@ export default function Entrevista() {
 
 
   return (
+
     <LayoutPage>
-      <Box sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '90vh',
-      }}>
-        <h1>Responde a la siguiente pregunta</h1>
-        <Grow checked={true}>
-          <Stack width={500}>
-            <p>{question}</p>
-          </Stack>
-        </Grow>
+      <Suspense fallback={<div>Loading...</div>}>
 
-        {!checked && <Grow checked={!checked}>
-          <form onSubmit={onSubmitJob}>
-            <Stack spacing={2} width={500}>
-              <TextField
-                label="Respuesta"
-                variant="outlined"
-                {...register('respuesta', { required: "El campo es requerido" })}
-                size="medium"
-                error={!!errors?.respuesta?.message}
-                helperText={errors.respuesta?.message}
-              />
-              <Button
-                variant="contained"
-                type="submit"
-                size="large"
-              >
-                Validar respuesta
-              </Button>
+        <Box sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '90vh',
+        }}>
+          <h1>Responde a la siguiente pregunta</h1>
+          <Grow checked={true}>
+            <Stack width={500}>
+              <p>{question}</p>
             </Stack>
-          </form>
-        </Grow>}
+          </Grow>
 
-        <Grow checked={checked}>
-          <Stack width={500}>
-            <p>{answer}</p>
-            <p>{feedback}</p>
-            <p>Next question</p>
-            <p>Add favorito</p>
-          </Stack>
-        </Grow>
-      </Box>
+          {!checked && <Grow checked={!checked}>
+            <form onSubmit={onSubmitJob}>
+              <Stack spacing={2} width={500}>
+                <TextField
+                  label="Respuesta"
+                  variant="outlined"
+                  {...register('respuesta', { required: "El campo es requerido" })}
+                  size="medium"
+                  error={!!errors?.respuesta?.message}
+                  helperText={errors.respuesta?.message}
+                />
+                <Button
+                  variant="contained"
+                  type="submit"
+                  size="large"
+                >
+                  Validar respuesta
+                </Button>
+              </Stack>
+            </form>
+          </Grow>}
+
+          <Grow checked={checked}>
+            <Stack width={500}>
+              <p>{answer}</p>
+              <p>{feedback}</p>
+              <p>Next question</p>
+              <p>Add favorito</p>
+            </Stack>
+          </Grow>
+        </Box>
+      </Suspense>
     </LayoutPage>
   )
 }
