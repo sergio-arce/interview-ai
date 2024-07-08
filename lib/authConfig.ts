@@ -58,6 +58,9 @@ export const authOptions: AuthOptions = {
     })
     // ...add more providers
   ],
+  pages: {
+    signIn: "/"
+  },
   session: {
     strategy: "jwt",
   },
