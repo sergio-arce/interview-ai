@@ -80,6 +80,8 @@ export default function Login() {
           </Stack>
         </form>
         <Link className={classes.link} href='/recuperar-password'>Contraseña olvidada?</Link>
+        <span>No tienes una cuenta? <Link className={classes.link} href='/recuperar-password'>Registrate</Link></span>
+
         <Divider sx={{ margin: '2px 0' }}>O BIEN</Divider>
         <Button onClick={() => handleSignIn("github")} startIcon={<Image src={githubLogo} alt="Github Logo" width={20} height={20} />} variant="outlined">GitHub</Button>
         <Button onClick={() => handleSignIn("google")} startIcon={<Image src={googleLogo} alt="Google Logo" width={20} height={20} />} variant="outlined">Google</Button>

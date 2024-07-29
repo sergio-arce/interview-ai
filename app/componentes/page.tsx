@@ -1,17 +1,17 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import { Theme, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { Chip, Typography, TextField, Divider, Button } from '@mui/material/';
+import { useState } from 'react'
+import { Theme, useTheme } from '@mui/material/styles'
+import Box from '@mui/material/Box'
+import OutlinedInput from '@mui/material/OutlinedInput'
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+import FormControl from '@mui/material/FormControl'
+import Select, { SelectChangeEvent } from '@mui/material/Select'
+import { Chip, Typography, TextField, Divider, Button } from '@mui/material/'
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
+const ITEM_HEIGHT = 48
+const ITEM_PADDING_TOP = 8
 const MenuProps = {
   PaperProps: {
     style: {
@@ -19,7 +19,7 @@ const MenuProps = {
       width: 250,
     },
   },
-};
+}
 
 const names = [
   'Oliver Hansen',
@@ -32,7 +32,7 @@ const names = [
   'Bradley Wilkerson',
   'Virginia Andrews',
   'Kelly Snyder',
-];
+]
 
 function getStyles(name: string, personName: readonly string[], theme: Theme) {
   return {
@@ -40,19 +40,25 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
       personName.indexOf(name) === -1
         ? theme.typography.fontWeightRegular
         : theme.typography.fontWeightMedium,
-  };
+  }
 }
 
 export default function MultipleSelectChip() {
-  const theme = useTheme();
-  const [personName, setPersonName] = useState<string[]>([]);
+  const theme = useTheme()
+  const [personName, setPersonName] = useState<string[]>([])
 
   const handleChange = ({ target }: SelectChangeEvent<typeof personName>) => {
     const { value } = target
     setPersonName(
       typeof value === 'string' ? value.split(',') : value,
-    );
-  };
+    )
+  }
+
+  const [age, setAge] = useState('')
+
+  const handleChangeSelect = (event: SelectChangeEvent) => {
+    setAge(event.target.value as string)
+  }
   return (
     <div>
       <FormControl sx={{ m: 1, width: 300 }}>
@@ -85,6 +91,26 @@ export default function MultipleSelectChip() {
           ))}
         </Select>
         <Divider sx={{ margin: '16px 0' }} />
+
+        <Box sx={{ minWidth: 120 }}>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Puesto ofertado</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={age}
+              label="Age"
+              onChange={handleChangeSelect}
+            >
+              <MenuItem value={10}>Front-end</MenuItem>
+              <MenuItem value={20}>Back-end</MenuItem>
+              <MenuItem value={30}>Data siente</MenuItem>
+            </Select>
+
+          </FormControl>
+        </Box>
+
+        <Divider sx={{ margin: '16px 0' }} />
         <TextField
           id="outlined-multiline-static"
           label="Multiline"
@@ -111,5 +137,5 @@ export default function MultipleSelectChip() {
         h3. Heading
       </Typography>
     </div>
-  );
+  )
 }
