@@ -1,4 +1,4 @@
-import { Box, Typography, Button } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 
 export const Hero = () => {
   return (
@@ -15,9 +15,6 @@ export const Hero = () => {
         <Typography variant="subtitle1">
           Get ready to shine in your job interviews with questions crafted by artificial intelligence. Receive personalized feedback and improvement suggestions to shine like never before.
         </Typography>
-        <Button href="/login" variant="contained" sx={styles.loginButton}>
-          Login
-        </Button>
       </Box>
     </Box>
   )

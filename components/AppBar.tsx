@@ -11,12 +11,12 @@ import {
   Tooltip,
   MenuItem,
 } from '@mui/material'
-import { keyframes } from '@emotion/react';
+import { keyframes } from '@emotion/react'
 import IconButton from '@mui/material/IconButton'
 import { signOut, useSession } from 'next-auth/react'
 import { usePathname, useRouter } from 'next/navigation'
 
-const pages = ['home', 'blog', "faq"]
+const pages = ['home', 'blog', "faq", 'login']
 const settings = ['Profile', 'Logout']
 
 export const AppBar = () => {
@@ -36,13 +36,8 @@ export const AppBar = () => {
 
   const handleCloseNavMenu = (page: string) => {
     setAnchorElNav(null)
-    if (page === 'home') {
-      router.push('/')
-    } else if (page === 'blog') {
-      router.push('/blog')
-    } else if (page === "faq") {
-      router.push('/faq')
-    }
+    if (page === 'home') return router.push('/')
+    router.push(page)
   }
 
   const handleCloseUserMenu = (item: string) => {
@@ -54,6 +49,10 @@ export const AppBar = () => {
     }
     setAnchorElUser(null)
   }
+
+  // Determine which pages to show based on the pathname
+  const shouldShowHome = pathname !== '/'
+  const shouldShowLogin = pathname !== '/login'
 
   return (
     <AppBarMU position="static">
@@ -108,6 +107,7 @@ export const AppBar = () => {
               }}
             >
               {pages.map((page) => (
+                (page !== 'home' || shouldShowHome) && (page !== 'login' || shouldShowLogin) &&
                 <MenuItem key={page} onClick={() => handleCloseNavMenu(page)}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
@@ -135,6 +135,7 @@ export const AppBar = () => {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
+              (page !== 'home' || shouldShowHome) && (page !== 'login' || shouldShowLogin) &&
               <Button
                 key={page}
                 onClick={() => handleCloseNavMenu(page)}
@@ -183,12 +184,12 @@ export const AppBar = () => {
 // Animation
 const glowAnimation = keyframes`
   0% {
-    text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.6);
+    text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.6)
   }
   50% {
-    text-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2);
+    text-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2)
   }
   100% {
-    text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.6);
+    text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.6)
   }
-`;
+`
