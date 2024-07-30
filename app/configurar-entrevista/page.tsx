@@ -11,10 +11,8 @@ import Box from '@mui/material/Box'
 import MenuItem from '@mui/material/MenuItem'
 import InputLabel from '@mui/material/InputLabel'
 import FormControl from '@mui/material/FormControl'
-import { signOut } from 'next-auth/react'
-import { AppBar, Grow, LayoutPage } from '@/components'
+import { Grow } from '@/components'
 import { useRouter } from 'next/navigation'
-
 
 const ITEM_HEIGHT = 48
 const ITEM_PADDING_TOP = 8
@@ -87,81 +85,79 @@ const ConfigurarEntrevista = () => {
   }
 
   return (
-    <LayoutPage>
-      <Box sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '90vh',
-      }}>
-        <Grow checked={!checked}>
-          <form onSubmit={onSubmitJob}>
-            <Stack spacing={2} width={500}>
-              <TextField
-                label="Puesto ofertado"
-                variant="outlined"
-                {...register('job', { required: "El campo es requerido" })}
-                size="medium"
-                error={!!errors?.job?.message}
-                helperText={errors.job?.message}
-              />
-              <Button
-                variant="contained"
-                type="submit"
-                size="large"
-              >
-                Enviar
-              </Button>
-            </Stack>
-          </form>
-        </Grow>
+    <Box sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: '90vh',
+    }}>
+      <Grow checked={!checked}>
+        <form onSubmit={onSubmitJob}>
+          <Stack spacing={2} width={500}>
+            <TextField
+              label="Puesto ofertado"
+              variant="outlined"
+              {...register('job', { required: "El campo es requerido" })}
+              size="medium"
+              error={!!errors?.job?.message}
+              helperText={errors.job?.message}
+            />
+            <Button
+              variant="contained"
+              type="submit"
+              size="large"
+            >
+              Enviar
+            </Button>
+          </Stack>
+        </form>
+      </Grow>
 
-        <Grow checked={checked}>
-          <form onSubmit={handleSubmitTechnologies}>
-            <Stack spacing={2} width={500}>
-              <FormControl sx={{ width: 500 }} fullWidth error={errorTechnologies}>
-                <InputLabel id="demo-multiple-chip-label">Tecnologías</InputLabel>
-                <Select
-                  labelId="demo-multiple-chip-label"
-                  id="demo-multiple-chip"
-                  multiple
-                  value={technologies}
-                  onChange={handleChange}
-                  input={<OutlinedInput id="select-multiple-chip" label="Tecnologías" />}
-                  renderValue={(selected) => (
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                      {selected.map((value) => (
-                        <Chip key={value} label={value} />
-                      ))}
-                    </Box>
-                  )}
-                  MenuProps={MenuProps}
-                >
-                  {technologiesData.map((name) => (
-                    <MenuItem
-                      key={name}
-                      value={name}
-                      style={getStyles(name, technologies, theme)}
-                    >
-                      {name}
-                    </MenuItem>
-                  ))}
-                </Select>
-                {errorTechnologies && <FormHelperText>El campo es requerido</FormHelperText>}
-              </FormControl>
-              <Button
-                variant="contained"
-                type="submit"
-                size="large"
+      <Grow checked={checked}>
+        <form onSubmit={handleSubmitTechnologies}>
+          <Stack spacing={2} width={500}>
+            <FormControl sx={{ width: 500 }} fullWidth error={errorTechnologies}>
+              <InputLabel id="demo-multiple-chip-label">Tecnologías</InputLabel>
+              <Select
+                labelId="demo-multiple-chip-label"
+                id="demo-multiple-chip"
+                multiple
+                value={technologies}
+                onChange={handleChange}
+                input={<OutlinedInput id="select-multiple-chip" label="Tecnologías" />}
+                renderValue={(selected) => (
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                    {selected.map((value) => (
+                      <Chip key={value} label={value} />
+                    ))}
+                  </Box>
+                )}
+                MenuProps={MenuProps}
               >
-                Empezar entrevista
-              </Button>
-            </Stack>
-          </form>
-        </Grow>
-      </Box>
-    </LayoutPage>
+                {technologiesData.map((name) => (
+                  <MenuItem
+                    key={name}
+                    value={name}
+                    style={getStyles(name, technologies, theme)}
+                  >
+                    {name}
+                  </MenuItem>
+                ))}
+              </Select>
+              {errorTechnologies && <FormHelperText>El campo es requerido</FormHelperText>}
+            </FormControl>
+            <Button
+              variant="contained"
+              type="submit"
+              size="large"
+            >
+              Empezar entrevista
+            </Button>
+          </Stack>
+        </form>
+      </Grow>
+    </Box>
   )
 }
 

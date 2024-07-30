@@ -1,29 +1,21 @@
-import { makeStyles, Theme } from 'mui-styles'
-import { Box, Typography, Button } from '@mui/material';
+import { Box, Typography, Button } from '@mui/material'
 
 export const Hero = () => {
-  const classes = useStyles()
-
   return (
-    <Box className={classes.container}>
-      <Box
-        className={classes.backgroundImage}
-        sx={{
-          backgroundImage: 'url("/interview_ia.png")',
-        }}
-      />
-      <Box className={classes.darkOverlay} />
-      <Box className={classes.textContainer}>
-        <Typography variant="h1" className={classes.title}>
+    <Box sx={styles.container}>
+      <Box sx={styles.backgroundImage} />
+      <Box sx={styles.darkOverlay} />
+      <Box sx={styles.textContainer}>
+        <Typography variant="h1" sx={styles.title}>
           Tech AInterview
         </Typography>
-        <Typography variant="h2" className={classes.subtitle}>
+        <Typography variant="h2" sx={styles.subtitle}>
           Impress in your interviews with our platform!
         </Typography>
         <Typography variant="subtitle1">
           Get ready to shine in your job interviews with questions crafted by artificial intelligence. Receive personalized feedback and improvement suggestions to shine like never before.
         </Typography>
-        <Button href="/login" variant="contained" className={classes.loginButton}>
+        <Button href="/login" variant="contained" sx={styles.loginButton}>
           Login
         </Button>
       </Box>
@@ -31,10 +23,8 @@ export const Hero = () => {
   )
 }
 
-/**
- * Styles
- */
-const useStyles = makeStyles((theme: Theme) => ({
+/** Styles **/
+const styles = {
   container: {
     display: 'flex',
     flexDirection: 'column',
@@ -50,10 +40,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     left: 0,
     width: '100%',
     height: '100%',
+    backgroundImage: 'url("/interview_ia.png")',
     backgroundSize: 'cover',
     backgroundPosition: 'top',
-    filter: 'brightness(0.8)',
-    // background: '#171a4a',
+    filter: 'brightness(0.9)',
     zIndex: 1,
   },
   darkOverlay: {
@@ -72,7 +62,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     borderRadius: '8px',
     textAlign: 'center',
     color: '#fff',
-    maxWidth: 550
+    maxWidth: 550,
   },
   title: {
     backgroundImage: 'linear-gradient(270deg, #4f56ff, #ff4980)',
@@ -80,7 +70,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     WebkitTextFillColor: 'transparent',
     fontSize: '3.5rem',
     margin: '3rem 0 1.5rem 0',
-    fontWeight: 600
+    fontWeight: 600,
   },
   subtitle: {
     fontSize: '1.7rem',
@@ -94,6 +84,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: '200px',
     '&:hover': {
       backgroundColor: '#474eeb',
-    }
-  }
-}))
+    },
+  },
+}

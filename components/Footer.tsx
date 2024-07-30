@@ -1,24 +1,15 @@
-
-import { makeStyles, Theme } from 'mui-styles'
+import { Box } from '@mui/material'
 
 export const Footer = () => {
-  const classes = useStyles()
-
   return (
-    <footer className={classes.footer}>
-      <p>Tech AInterview © {new Date().getFullYear()}</p>
-    </footer>
-  )
+    <Box
+      component="footer"
+      textAlign="center"
+      p={6}
+      color="white"
+      bgcolor="primary.main"
+    >
+      Tech AInterview © {new Date().getFullYear()}
+    </Box>
+  );
 };
-
-/**
- * Styles
- */
-const useStyles = makeStyles((theme: Theme) => ({
-  footer: {
-    textAlign: 'center',
-    padding: '3rem 2rem',
-    color: 'white',
-    background: '#171a4a'
-  }
-}))

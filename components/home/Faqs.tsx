@@ -1,18 +1,15 @@
-import { Box, Typography } from '@mui/material';
-import { makeStyles, Theme } from 'mui-styles';
+import { Box, Typography } from '@mui/material'
 
 export const Faqs = () => {
-  const classes = useStyles()
-
   return (
-    <Box className={classes.container}>
-      <Typography variant="h2" className={classes.title}>
+    <Box sx={styles.container}>
+      <Typography variant="h2" sx={styles.title}>
         How does artificial intelligence work in interviews?
       </Typography>
       <Typography variant="subtitle1">
         Our artificial intelligence generates relevant and up-to-date questions for each interview, providing a unique experience for the candidate.
       </Typography>
-      <Typography variant="h2" className={classes.title}>
+      <Typography variant="h2" sx={styles.title}>
         Is the interview platform really free?
       </Typography>
       <Typography variant="subtitle1">
@@ -22,10 +19,8 @@ export const Faqs = () => {
   )
 }
 
-/**
- * Styles
- */
-const useStyles = makeStyles((theme: Theme) => ({
+/** Styles **/
+const styles = {
   container: {
     display: 'flex',
     flexDirection: 'column',
@@ -36,5 +31,5 @@ const useStyles = makeStyles((theme: Theme) => ({
   title: {
     fontSize: '2rem',
     margin: '3rem 0 1.5rem 0',
-  }
-}))
+  },
+}

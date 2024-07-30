@@ -1,17 +1,14 @@
-import type { Metadata } from "next"
+'use client'
+
 import { Inter } from "next/font/google"
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter"
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter"
 import { ThemeProvider } from "@mui/material/styles"
 import theme from "../theme"
 import { NextAuthSessionProvider } from "@/providers"
 import { Suspense } from "react"
+import { AppBar, Footer } from '@/components'
 
 const inter = Inter({ subsets: ["latin"] })
-
-export const metadata: Metadata = {
-  title: "Aplicación de entrevistas de trabajo",
-  description: "Lorem ipsum",
-}
 
 export default async function RootLayout({
   children,
@@ -25,7 +22,9 @@ export default async function RootLayout({
           <AppRouterCacheProvider>
             <ThemeProvider theme={theme}>
               <Suspense>
+                <AppBar />
                 {children}
+                <Footer />
               </Suspense>
             </ThemeProvider>
           </AppRouterCacheProvider>

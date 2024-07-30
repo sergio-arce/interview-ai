@@ -11,19 +11,21 @@ import {
   Tooltip,
   MenuItem,
 } from '@mui/material'
+import { keyframes } from '@emotion/react';
 import IconButton from '@mui/material/IconButton'
 import { signOut, useSession } from 'next-auth/react'
-// import MenuIcon from '@mui/icons-material/Menu'
-// import AdbIcon from '@mui/icons-material/Adb'
+import { usePathname, useRouter } from 'next/navigation'
 
-const pages = ['Products', 'Pricing', 'Blog']
-const settings = ['Perfil', 'Logout']
+const pages = ['home', 'blog', "faq"]
+const settings = ['Profile', 'Logout']
 
 export const AppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null)
   const { data: session } = useSession()
-  console.log({ session })
+  const router = useRouter()
+  const pathname = usePathname()
+  console.log({ session, pathname }) // Todo: delete
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget)
@@ -32,16 +34,23 @@ export const AppBar = () => {
     setAnchorElUser(event.currentTarget)
   }
 
-  const handleCloseNavMenu = () => {
+  const handleCloseNavMenu = (page: string) => {
     setAnchorElNav(null)
+    if (page === 'home') {
+      router.push('/')
+    } else if (page === 'blog') {
+      router.push('/blog')
+    } else if (page === "faq") {
+      router.push('/faq')
+    }
   }
 
   const handleCloseUserMenu = (item: string) => {
     if (item === 'Logout') {
       signOut({ callbackUrl: '/' })
     }
-    if (item === 'Perfil') {
-      console.log('Perfil')
+    if (item === 'Profile') {
+      console.log('profile') // Todo: Add pagge
     }
     setAnchorElUser(null)
   }
@@ -50,23 +59,23 @@ export const AppBar = () => {
     <AppBarMU position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
           <Typography
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
               fontFamily: 'monospace',
               fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
+              letterSpacing: '0.05rem',
+              color: 'white',
               textDecoration: 'none',
+              animation: `${glowAnimation} 3s infinite`,
             }}
           >
-            LOGO
+            AInterview
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -99,36 +108,36 @@ export const AppBar = () => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page} onClick={() => handleCloseNavMenu(page)}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
           <Typography
             variant="h5"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
               flexGrow: 1,
               fontFamily: 'monospace',
               fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
+              letterSpacing: '0.05rem',
+              color: 'white',
               textDecoration: 'none',
+              animation: `${glowAnimation} 3s infinite`,
             }}
           >
-            LOGO
+            AInterview
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={() => handleCloseNavMenu(page)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}
@@ -139,8 +148,7 @@ export const AppBar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                {/* <Avatar alt="Remy Sharp" src="https://avatars.githubusercontent.com/u/28737192?v=4" /> */}
-                <Avatar alt="Remy Sharp" src={session?.user?.image} />
+                {!['/login', '/register', '/'].includes(pathname) && <Avatar alt="User image" src={session?.user?.image} />}
               </IconButton>
             </Tooltip>
             <Menu
@@ -171,3 +179,16 @@ export const AppBar = () => {
     </AppBarMU>
   )
 }
+
+// Animation
+const glowAnimation = keyframes`
+  0% {
+    text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.6);
+  }
+  50% {
+    text-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2);
+  }
+  100% {
+    text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.6);
+  }
+`;
