@@ -7,10 +7,10 @@ export async function POST(req: NextRequest) {
   try {
     await connectMongoDB()
 
-    const body = await req.json()
-    console.log('body', body)
+    const { position, experience, questions } = await req.json()
 
 
+    console.log({ position, experience, questions })
 
     /**
      * todo: todo ok no borrar esta parte

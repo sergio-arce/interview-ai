@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
   try {
     await connectMongoDB()
 
-    const { job } = await req.json()
+    const { position, experience } = await req.json()
 
     /**
      * Todo: todo ok no borrar

@@ -10,11 +10,10 @@ export const Hero = () => {
           Tech AInterview
         </Typography>
         <Typography variant="h2" sx={styles.subtitle}>
-          Impress in your interviews with our platform!
+          Stand out in your interviews with our platform!
         </Typography>
         <Typography variant="subtitle1">
-          Get ready to shine in your job interviews with questions crafted by artificial intelligence. Receive personalized feedback and improvement suggestions to shine like never before.
-        </Typography>
+          Prepare to succeed in your job interviews with AI-generated questions. Get personalized feedback and tailored suggestions to perform at your best.        </Typography>
       </Box>
     </Box>
   )
@@ -30,6 +29,7 @@ const styles = {
     height: '90vh',
     position: 'relative',
     overflow: 'hidden',
+    marginTop: 8
   },
   backgroundImage: {
     position: 'absolute',

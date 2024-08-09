@@ -19,7 +19,7 @@ export default function Login() {
 
   const handleSignIn = (provider: string) => {
     try {
-      signIn(provider, { callbackUrl: '/configurar-entrevista' })
+      signIn(provider, { callbackUrl: '/interview-settings' })
     } catch (error) {
       console.log('Error', error) // TODO: ADD TOAST ERROR
     }
@@ -41,11 +41,11 @@ export default function Login() {
   })
 
   return (
-    <Box sx={styles.container}>
-      <Typography variant="h1">Login</Typography>
+    <Box sx={styles.container} className="animate__animated animate__fadeIn">
       <Box sx={styles.form}>
         <form onSubmit={onSubmit}>
           <Stack spacing={2}>
+            <Typography variant="h1" align="center">Login</Typography>
             <TextField
               label="Email"
               variant="outlined"
@@ -72,11 +72,13 @@ export default function Login() {
             </Button>
           </Stack>
         </form>
-        <Link href='/recuperar-password' style={{ fontSize: 14, color: "#9e9e9e", textDecoration: 'none' }}>
-          Forgot your password?
-        </Link>
         <Typography variant="body2" sx={styles.registerLink}>
-          Don't have an account? <Link href='/register' style={{ fontSize: 14, color: "#9e9e9e", textDecoration: 'none' }}>Register</Link>
+          <Link href='/recuperar-password' style={{ fontSize: 14, color: "#9e9e9e", textDecoration: 'none' }}>
+            <i>Forgot your password?</i>
+          </Link>
+        </Typography>
+        <Typography variant="body2" sx={styles.registerLink}>
+          Don't have an account? <Link href='/register' style={{ fontSize: 14, color: "#9e9e9e", textDecoration: 'none' }}><i>Register</i></Link>
         </Typography>
 
         <Divider sx={styles.divider}>OR</Divider>
@@ -108,7 +110,8 @@ const styles = {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    height: '90vh',
+    height: '80vh',
+    marginTop: '33px'
   },
   form: {
     display: 'flex',

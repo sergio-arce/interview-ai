@@ -1,14 +1,30 @@
 'use client'
 
 import { useState } from 'react'
-import { Theme, useTheme } from '@mui/material/styles'
+import { Theme, useTheme, styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
-import { Chip, Typography, TextField, Divider, Button } from '@mui/material/'
+import { Chip, Typography, TextField, Divider, Button, Stack } from '@mui/material';
+import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
+import { ProgressBar } from '@/components'
+
+const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
+  height: 10,
+  borderRadius: 5,
+  [`&.${linearProgressClasses.colorPrimary}`]: {
+    backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
+  },
+  [`& .${linearProgressClasses.bar}`]: {
+    borderRadius: 5,
+    backgroundColor: theme.palette.mode === 'light' ? '#1a90ff' : '#308fe8',
+  },
+  width: '100%'
+}));
+
 
 const ITEM_HEIGHT = 48
 const ITEM_PADDING_TOP = 8
@@ -106,7 +122,6 @@ export default function MultipleSelectChip() {
               <MenuItem value={20}>Back-end</MenuItem>
               <MenuItem value={30}>Data siente</MenuItem>
             </Select>
-
           </FormControl>
         </Box>
 
@@ -136,6 +151,21 @@ export default function MultipleSelectChip() {
       <Typography variant="h3" gutterBottom>
         h3. Heading
       </Typography>
+
+      {/* gray: '#F5F6F8' */}
+      <ProgressBar text1="Text 1" text2="Text 2" text3="Text 3" value={1} />
+      <ProgressBar text1="Text 1" text2="Text 2" text3="Text 3" value={5} />
+      <ProgressBar text1="Text 1" text2="Text 2" text3="Text 3" value={9} />
+      <Typography variant="h3" gutterBottom>
+        h3. Heading
+      </Typography>
     </div>
   )
 }
+
+
+
+
+
+
+

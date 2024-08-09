@@ -1,4 +1,5 @@
-import { Box } from '@mui/material'
+import { Box, Stack } from '@mui/material';
+import { Logo } from './Logo';
 
 export const Footer = () => {
   return (
@@ -8,8 +9,15 @@ export const Footer = () => {
       p={6}
       color="white"
       bgcolor="primary.main"
+      className="animate__animated animate__fadeIn"
+      sx={{
+        display: 'flex',
+        justifyContent: 'center'
+      }}
     >
-      Tech AInterview © {new Date().getFullYear()}
+      <Stack direction="row" sx={{ display: 'flex', alignItems: 'center' }}>
+        <Logo fontSize={14} /> © {new Date().getFullYear()}
+      </Stack>
     </Box>
   );
 };

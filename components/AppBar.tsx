@@ -15,8 +15,10 @@ import { keyframes } from '@emotion/react'
 import IconButton from '@mui/material/IconButton'
 import { signOut, useSession } from 'next-auth/react'
 import { usePathname, useRouter } from 'next/navigation'
+import MenuIcon from '@mui/icons-material/Menu'
+import { Logo } from './Logo';
 
-const pages = ['home', 'blog', "faq", 'login']
+const pages = ['home', "blog", 'login']
 const settings = ['Profile', 'Logout']
 
 export const AppBar = () => {
@@ -55,28 +57,11 @@ export const AppBar = () => {
   const shouldShowLogin = pathname !== '/login'
 
   return (
-    <AppBarMU position="static">
+    <AppBarMU component="nav" className="animate__animated animate__fadeIn">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '0.05rem',
-              color: 'white',
-              textDecoration: 'none',
-              animation: `${glowAnimation} 3s infinite`,
-            }}
-          >
-            AInterview
-          </Typography>
-
+          {/* Logo desktop */}
+          <Logo fontSize={18} display={{ xs: 'none', md: 'flex' }} />
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -86,7 +71,7 @@ export const AppBar = () => {
               onClick={handleOpenNavMenu}
               color="inherit"
             >
-              {/* <MenuIcon /> */}
+              <MenuIcon />
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -109,30 +94,13 @@ export const AppBar = () => {
               {pages.map((page) => (
                 (page !== 'home' || shouldShowHome) && (page !== 'login' || shouldShowLogin) &&
                 <MenuItem key={page} onClick={() => handleCloseNavMenu(page)}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography sx={{ textTransform: 'capitalize', textAlign: 'center' }}>{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '0.05rem',
-              color: 'white',
-              textDecoration: 'none',
-              animation: `${glowAnimation} 3s infinite`,
-            }}
-          >
-            AInterview
-          </Typography>
+          {/* Logo mobile */}
+          <Logo fontSize={14} display={{ xs: 'flex', md: 'none' }} />
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               (page !== 'home' || shouldShowHome) && (page !== 'login' || shouldShowLogin) &&
@@ -184,12 +152,12 @@ export const AppBar = () => {
 // Animation
 const glowAnimation = keyframes`
   0% {
-    text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.6)
+    text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.7)
   }
   50% {
     text-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2)
   }
   100% {
-    text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.6)
+    text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.7)
   }
 `

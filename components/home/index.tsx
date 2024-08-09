@@ -1,2 +1,5 @@
 export * from './Hero'
 export * from './Faqs'
+export * from './Testimonials'
+export * from './Information'
+export * from './PlatformOverview'
