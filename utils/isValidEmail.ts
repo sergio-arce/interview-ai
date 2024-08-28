@@ -1,4 +1,6 @@
+import { EMAIL_REGEX } from "./constans"
+
 export function isValidEmail(email: string): boolean {
-  const emailRegex = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/
+  const emailRegex = EMAIL_REGEX
   return emailRegex.test(email)
 }

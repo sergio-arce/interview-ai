@@ -1,33 +1,45 @@
 'use client'
 
-import { signIn } from 'next-auth/react'
 import { Button, Box, Typography, Stack, TextField } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
+import { toastError, toastSuccess } from '@/utils/toast'
+import { EMAIL_REGEX } from '@/utils/constans'
 
 export default function Register() {
-  const { register, handleSubmit, formState } = useForm<{
+  const { register, handleSubmit, formState, watch } = useForm<{
     name: string,
     lastname: string,
     email: string,
     password: string,
     confirmPassword: string
-  }>()
+  }>({
+    mode: 'onBlur', // Valida cuando el usuario pierde el foco del campo
+  })
+
   const { errors } = formState
   const router = useRouter()
 
-  const handleSignIn = (provider: string) => {
-    try {
-      signIn(provider, { callbackUrl: '/configurar-entrevista' })
-    } catch (error) {
-      console.log('Error', error) // TODO: ADD TOAST ERROR
-    }
-  }
-
   const onSubmit = handleSubmit(async ({ name, lastname, email, password, confirmPassword }) => {
-    console.log({ name, lastname, email, password, confirmPassword })
-    // TODO: Add register user api
-    router.push("/login")
+    fetch('/api/auth/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ name, lastname, email, password, confirmPassword })
+    })
+      .then(data => data.json())
+      .then(data => {
+        if (data?.error) {
+          console.log("validation ", data.error)
+          toastError({ message: data?.error })
+          return
+        }
+        toastSuccess({ message: "Usuario creado correctamente." })
+        // redirect to login page
+        router.push("/login")
+      })
+      .catch(error => console.log("Error ", error))
   })
 
   return (
@@ -55,7 +67,13 @@ export default function Register() {
             <TextField
               label="Email"
               variant="outlined"
-              {...register('email', { required: "The field is required" })}
+              {...register('email', {
+                required: "The field is required",
+                pattern: {
+                  value: EMAIL_REGEX,
+                  message: "Please enter a valid email address"
+                }
+              })}
               size="small"
               error={!!errors?.email?.message}
               helperText={errors.email?.message}
@@ -63,7 +81,13 @@ export default function Register() {
             <TextField
               label="Password"
               variant="outlined"
-              {...register('password', { required: "The field is required" })}
+              {...register('password', {
+                required: "The field is required",
+                pattern: {
+                  value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_\-])[A-Za-z\d@$!%*?&_\-]{8,}$/,
+                  message: "Password must be at least 8 characters long, and include an uppercase letter, a lowercase letter, a number, and a special character."
+                }
+              })}
               size="small"
               type="password"
               error={!!errors?.password?.message}
@@ -72,7 +96,10 @@ export default function Register() {
             <TextField
               label="Confirm Password"
               variant="outlined"
-              {...register('confirmPassword', { required: "The field is required" })}
+              {...register('confirmPassword', {
+                required: "The field is required",
+                validate: (value) => value === watch('password') || 'Passwords do not match'
+              })}
               size="small"
               type="password"
               error={!!errors?.confirmPassword?.message}

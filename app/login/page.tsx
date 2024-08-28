@@ -8,12 +8,17 @@ import { useForm } from 'react-hook-form'
 import githubLogo from '@/public/github.png'
 import googleLogo from '@/public/google.png'
 import { useRouter } from 'next/navigation'
+import { toastError } from '@/utils/toast'
+import { EMAIL_REGEX } from '@/utils/constans'
 
 export default function Login() {
   const { register, handleSubmit, formState } = useForm<{
     email: string,
     password: string
-  }>()
+  }>({
+    mode: 'onBlur', // Valida cuando el usuario pierde el foco del campo
+  })
+
   const { errors } = formState
   const router = useRouter()
 
@@ -21,7 +26,7 @@ export default function Login() {
     try {
       signIn(provider, { callbackUrl: '/interview-settings' })
     } catch (error) {
-      console.log('Error', error) // TODO: ADD TOAST ERROR
+      toastError({ message: "The credentials you entered are not valid." })
     }
   }
 
@@ -31,13 +36,13 @@ export default function Login() {
       password,
       redirect: false,
     })
-    console.log({ res })
+    // validar error
     if (res?.error) {
-      // todo: add toast error
-      console.log('Errorss: credenciales invalidas')
+      toastError({ message: "The credentials you entered are not valid." })
       return
     }
-    router.push("/configurar-entrevista")
+    // redirect
+    router.push('/interview-settings')
   })
 
   return (
@@ -49,7 +54,13 @@ export default function Login() {
             <TextField
               label="Email"
               variant="outlined"
-              {...register('email', { required: "The field is required" })}
+              {...register('email', {
+                required: "The field is required",
+                pattern: {
+                  value: EMAIL_REGEX,
+                  message: "Please enter a valid email address"
+                }
+              })}
               size="small"
               error={!!errors?.email?.message}
               helperText={errors.email?.message}
@@ -78,7 +89,7 @@ export default function Login() {
           </Link>
         </Typography>
         <Typography variant="body2" sx={styles.registerLink}>
-          Don't have an account? <Link href='/register' style={{ fontSize: 14, color: "#9e9e9e", textDecoration: 'none' }}><i>Register</i></Link>
+          Don't have an account yet? <Link href='/register' style={{ fontSize: 14, color: "#9e9e9e", textDecoration: 'none' }}><i>Register</i></Link>
         </Typography>
 
         <Divider sx={styles.divider}>OR</Divider>

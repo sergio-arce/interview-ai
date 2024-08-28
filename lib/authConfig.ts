@@ -30,7 +30,7 @@ export const authOptions: AuthOptions = {
         password: { label: "Contraseña", type: "password" }
       },
       async authorize(credentials) {
-        console.log({ credentials })
+
         // Add logic here to look up the user from the credentials supplied
         await connectMongoDB()
         // find user
@@ -38,18 +38,14 @@ export const authOptions: AuthOptions = {
           email: credentials?.email
         }).select("+password")
 
-        console.log("UserFound", userFound)
-
         // validate user
         if (!userFound) return null
-
 
         // password
         const isPasswordMatch = await bcrypt.compare(
           credentials!.password,
           userFound?.password
         )
-        console.log({ isPasswordMatch })
         // validate password
         if (!isPasswordMatch) return null
 
@@ -74,15 +70,21 @@ export const authOptions: AuthOptions = {
       return session
     },
     async signIn({ user, account }: any) { // todo: Delete any
-      console.log('account', account)
-      const { email } = user
+
+      const { email, name } = user
 
       await connectMongoDB()
       const userFound = await UserModel.findOne({ email })
 
       if (!userFound) {
-        // if (account.provider === 'google' || account.provider === 'github') {
+        // Si la cuenta del usuario es github o google 
+        // registramos al usuario en la BDD
         if (['github', 'google'].includes(account.provider)) {
+          const fullNameParts = name.split(' ')
+          const _name = fullNameParts[0]
+          const lastname = fullNameParts.slice(1).join(' ') || ''
+          console.log('env: ', process.env.PASSWORD_REGISTER)
+
           try {
             const res = await fetch('http://localhost:3000/api/auth/register', {
               method: "POST",
@@ -90,9 +92,11 @@ export const authOptions: AuthOptions = {
                 "Content-Type": "application/json"
               },
               body: JSON.stringify({
+                name: _name,
+                lastname,
                 email,
-                password: '12345', // todo: add .env
-                confirmPassword: '12345', // todo: add .env
+                password: process.env.PASSWORD_REGISTER,
+                confirmPassword: process.env.PASSWORD_REGISTER
               })
             })
 

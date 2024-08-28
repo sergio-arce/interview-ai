@@ -84,8 +84,8 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ questions: MOCK_QUESTIONS }, { status: 200 })
   } catch (error) {
-    console.error('Error en la API:', error);
-    return NextResponse.json({ error: 'Error al procesar la solicitud' }, { status: 500 })
+    console.error('API Error:', error);
+    return NextResponse.json({ error: 'Error processing request' }, { status: 500 })
   }
 }
 

@@ -3,6 +3,7 @@ import mongoose, { Schema, Document, ObjectId, models } from 'mongoose'
 // Define the interfece representing the structure of a user
 export interface IUser {
   _id: ObjectId
+  name: string
   email: string
   password: string
   createdAt: string | Date
@@ -12,6 +13,7 @@ export interface IUser {
 // Define the interface extending Document 
 export interface IUserSchema extends Document {
   _id: ObjectId
+  name: string
   email: string
   password: string
   createdAt: string | Date
@@ -20,6 +22,11 @@ export interface IUserSchema extends Document {
 
 const userSchema = new Schema<IUser>(
   {
+    name: {
+      type: String,
+      required: true,
+      tolowercase: true
+    },
     email: {
       type: String,
       required: true,

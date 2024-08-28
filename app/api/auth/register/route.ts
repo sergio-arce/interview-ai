@@ -10,30 +10,31 @@ import { isValidEmail } from '@/utils/isValidEmail'
 export const POST = async (req: NextRequest) => {
 
   try {
-    const { email, password, confirmPassword } = await req.json()
+    const { name, lastname, email, password, confirmPassword } = await req.json()
     // validate fields
-    if (!email || !password || !confirmPassword) {
-      return NextResponse.json({ message: 'Error campos requeridos' }, { status: 400 })
+    if (!name || !lastname || !email || !password || !confirmPassword) {
+      return NextResponse.json({ message: 'The field is required' }, { status: 400 })
     }
     // validate email
     if (!isValidEmail(email)) {
-      return NextResponse.json({ message: 'Error email no valido' }, { status: 400 })
+      return NextResponse.json({ message: 'Please enter a valid email address' }, { status: 400 })
     }
     // match passwords
     if (password !== confirmPassword) {
-      return NextResponse.json({ message: 'Error el password no coincide' }, { status: 400 })
+      return NextResponse.json({ message: 'Passwords do not match' }, { status: 400 })
     }
     // connect with mongo DB
     await connectMongoDB()
     // verified user
     const userFind = await UserModel.findOne({ email })
     if (userFind) {
-      return NextResponse.json({ message: 'Error usuario con este email ya existe' }, { status: 400 })
+      return NextResponse.json({ error: 'A user with this email is already registered.' }, { status: 400 })
     }
     //
     const hashedPassword = await bcrypt.hash(password, 10)
     // create a new user
     const newUser: IUserSchema = new UserModel({
+      name: `${name} ${lastname}`,
       email,
       password: hashedPassword
     })
@@ -43,6 +44,7 @@ export const POST = async (req: NextRequest) => {
     return NextResponse.json(
       {
         user: {
+          name: newUser.name,
           email: newUser.email,
           createdAt: newUser.createdAt,
           updatedAt: newUser.updatedAt

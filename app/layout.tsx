@@ -6,6 +6,7 @@ import theme from "../theme"
 import { NextAuthSessionProvider } from "@/providers"
 import { Suspense } from "react"
 import { AppBar, Footer } from '@/components'
+import { Toaster } from "sonner"
 import 'animate.css'
 
 export default function RootLayout({
@@ -22,6 +23,7 @@ export default function RootLayout({
               <Suspense>
                 <AppBar />
                 {children}
+                <Toaster position="top-right" visibleToasts={1} />
                 <Footer />
               </Suspense>
             </ThemeProvider>
