@@ -2,9 +2,10 @@ import type { AuthOptions } from "next-auth"
 import GithhubProvider from 'next-auth/providers/github'
 import GoogleProvider from 'next-auth/providers/google'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import { connectMongoDB } from '@/lib';
-import { UserModel } from "@/models/User";
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcryptjs'
+
+import { connectMongoDB } from '@/lib'
+import { UserModel } from "@/models/User"
 
 
 export const authOptions: AuthOptions = {
@@ -77,16 +78,16 @@ export const authOptions: AuthOptions = {
       const userFound = await UserModel.findOne({ email })
 
       if (!userFound) {
-        // Si la cuenta del usuario es github o google 
-        // registramos al usuario en la BDD
+        // Si el usuario inicia sesión con GitHub o Google y no existe en la BDD
+        // procedemos a registrarlo
         if (['github', 'google'].includes(account.provider)) {
           const fullNameParts = name.split(' ')
           const _name = fullNameParts[0]
           const lastname = fullNameParts.slice(1).join(' ') || ''
-          console.log('env: ', process.env.PASSWORD_REGISTER)
 
           try {
-            const res = await fetch('http://localhost:3000/api/auth/register', {
+            // const res = await fetch('/api/auth/register', {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json"
