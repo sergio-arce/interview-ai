@@ -39,7 +39,6 @@ export default function InterviewSettings() {
   const router = useRouter()
 
   const onSubmitPosition = handleSubmit(({ position, experience }) => {
-    console.log({ position, experience })
     fetch('/api/technologies', {
       method: 'POST',
       headers: {

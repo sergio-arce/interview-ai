@@ -6,7 +6,7 @@ Este proyecto es el Trabajo de Fin de Grado (TFG) de Sergio Michael Arce Chijo, 
 La plataforma desarrollada utiliza **Inteligencia Artificial (IA)**, específicamente el modelo **GPT-4** de OpenAI, para generar preguntas personalizadas para entrevistas técnicas de trabajo y proporcionar retroalimentación en tiempo real a los desarrolladores que deseen mejorar sus habilidades. El objetivo es proporcionar una herramienta adaptativa y eficiente que ayude a los candidatos a prepararse para entrevistas en roles de **backend**, **frontend**, **DevOps**, entre otros.
 
 <div align="center">
-  <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTByb2N6a2dsaXN3Y3RldGdud3BnY3NwM3UydnM1YmZzOXNuamVhciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/LPn77YyDIqfhm/giphy.gif" />
+  <image src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExeGZsa3pscXducWNtaGFhZTlwdm1ueHBhdTAxcm45Zm5ienE2aXM1ZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ouvSzoMTx6nXN6PiGu/giphy.gif" />
 </div>
 
 ## Características
