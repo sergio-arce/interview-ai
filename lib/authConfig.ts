@@ -72,6 +72,7 @@ export const authOptions: AuthOptions = {
     },
     async signIn({ user, account }: any) { // todo: Delete any
 
+      console.log("signin", { user, account })
       const { email, name } = user
 
       await connectMongoDB()
@@ -86,9 +87,8 @@ export const authOptions: AuthOptions = {
           const lastname = fullNameParts.slice(1).join(' ') || ''
 
           try {
-            // const res = await fetch('/api/auth/register', {
-            // const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/auth/register`, {
-            const res = await fetch(`api/auth/register`, {
+            // const res = await fetch(`api/auth/register`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/auth/register`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json"

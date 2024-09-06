@@ -70,6 +70,7 @@ export default function Login() {
               variant="outlined"
               {...register('password', { required: "The field is required" })}
               size="small"
+              type="password"
               error={!!errors?.password?.message}
               helperText={errors.password?.message}
             />

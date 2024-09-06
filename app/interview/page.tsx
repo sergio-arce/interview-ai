@@ -53,8 +53,6 @@ export default function Interview() {
     )
   }
 
-
-
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '90vh' }}>
       <Stack>

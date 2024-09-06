@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { toastError } from '@/utils/toast'
+import { useSession } from 'next-auth/react'
 
 interface IQuestions {
   key: number
@@ -19,6 +20,10 @@ export const useQuestions = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0)
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [isError, setIsError] = useState<boolean>(false)
+
+  const { data: session } = useSession()
+  console.log('SESSION', session)
+
 
   const router = useRouter()
 
@@ -82,10 +87,11 @@ export const useQuestions = () => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ position, experience, questions }),
+          body: JSON.stringify({ position, experience, questions, email: session?.user?.email }),
         })
-        localStorage.removeItem('questions')
-        localStorage.removeItem('currentIndex')
+        // TODO: desomentar estas dos lineas
+        // localStorage.removeItem('questions')
+        // localStorage.removeItem('currentIndex')
         router.push('/interview-feedback')
       } catch (error) {
         console.error("Error submitting feedback:", error)

@@ -80,7 +80,7 @@ Sigue los pasos para instalar y configurar el proyecto en tu entorno local.
     ```bash
     npm run dev
     ```
-5. Accede a la plataforma desde tu navegador en http://localhost:3000
+5. Accede a la plataforma desde tu navegador en: http://localhost:3000
 
 
 ## Uso de la plataforma
@@ -119,13 +119,12 @@ Este proyecto es el resultado de un Trabajo de Fin de Grado y, como tal, está e
 
 Este proyecto está bajo la licencia **Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)**. Esto significa que puedes compartir el material, siempre y cuando des el crédito adecuado, pero no puedes usarlo con fines comerciales ni distribuir versiones modificadas del mismo.
 
-Más detalles en: [Creative commons](https://creativecommons.org/licenses/by-nc-nd/4.0/) ó [License](LICENSE.md).
+Más detalles en: <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener noreferrer">Creative commons</a>
+ ó [License](LICENSE.md).
 
 ---
-**Autor:** Sergio Michael Arce Chijo
 
-Universidad Internacional de La Rioja
-
-**Director:** Luis Pedrasa Gomara
-
-**Fecha:** 11.09.2024
+<p style="margin: 0"><strong>Autor:</strong> Sergio Michael Arce Chijo</p>
+<p style="margin: 0"><strong>Universidad Internacional de La Rioja</strong></p>
+<p style="margin: 0"><strong>Director:</strong> Luis Pedrasa Gomara</p>
+<p style="margin: 0"><strong>Fecha:</strong> 11.09.2024</p>
