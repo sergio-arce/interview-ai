@@ -73,7 +73,7 @@ Sigue los pasos para instalar y configurar el proyecto en tu entorno local.
     JWT_SECRET=XXXXXX
     JWT_EXPIRATION_TIME=86400
     PASSWORD_REGISTER=XXXXXX
-    NEXT_PUBLIC_API_URL=http://localhost:3000
+    NEXT_PUBLIC_API_URL=http://localhost:3000/
     ```
 
 4. Inicia el servidor de desarrollo:
