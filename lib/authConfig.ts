@@ -88,8 +88,8 @@ export const authOptions: AuthOptions = {
 
           try {
             // const res = await fetch(`api/auth/register`, {
-            // const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/auth/register`, {
-            const res = await fetch(`https://vercel.com/sergio-dev/interview-ai/api/auth/register`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/auth/register`, {
+              // const res = await fetch(`https://vercel.com/sergio-dev/interview-ai/api/auth/register`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json"
