@@ -6,7 +6,8 @@ import bcrypt from 'bcryptjs'
 
 import { connectMongoDB } from '@/lib'
 import { UserModel } from "@/models/User"
-
+import type { Session } from "next-auth"
+import type { JWT } from "next-auth/jwt"
 
 export const authOptions: AuthOptions = {
   // Configure one or more authentication providers
@@ -62,17 +63,25 @@ export const authOptions: AuthOptions = {
     strategy: "jwt",
   },
   callbacks: {
-    async jwt({ token, user }) {
-      if (user) token.user = user
+    async jwt({ token }) {
       return token
     },
-    async session({ session, token }) {
-      session.user = token.user as any
-      return session
+    async session({ session, token }: { session: Session; token: JWT }) {
+      await connectMongoDB();
+      const userFound = await UserModel.findOne({ email: token.email })
+
+      if (userFound) {
+        session.user = {
+          userId: userFound._id.toString(),
+          name: userFound.name,
+          email: userFound.email,
+          image: token.picture ?? ""
+        } as any
+      }
+
+      return session;
     },
     async signIn({ user, account }: any) { // todo: Delete any
-
-      console.log("signin", { user, account })
       const { email, name } = user
 
       await connectMongoDB()
@@ -87,10 +96,7 @@ export const authOptions: AuthOptions = {
           const lastname = fullNameParts.slice(1).join(' ') || ''
 
           try {
-            // const res = await fetch(`api/auth/register`, {
-            // const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/auth/register`, {
-            const res = await fetch(`/api/auth/register`, {
-              // const res = await fetch(`https://vercel.com/sergio-dev/interview-ai/api/auth/register`, {
+            const res = await fetch(`https://interview-ai-navy.vercel.app/api/auth/register`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json"
@@ -109,7 +115,8 @@ export const authOptions: AuthOptions = {
             }
 
           } catch (error) {
-            console.log('ERROR', error)
+            console.error('Error registering OAuth user:', error);
+            return false; // Evitar el login si hay un error
           }
         }
       }

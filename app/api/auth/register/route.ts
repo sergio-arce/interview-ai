@@ -49,7 +49,7 @@ export const POST = async (req: NextRequest) => {
           createdAt: newUser.createdAt,
           updatedAt: newUser.updatedAt
         },
-        message: "Success usuario creado"
+        message: "Success user created"
       },
       {
         status: 201
@@ -59,9 +59,3 @@ export const POST = async (req: NextRequest) => {
     return NextResponse.json({ message: 'ERROR' }, { status: 500 })
   }
 }
-
-
-
-
-
-
