@@ -43,39 +43,32 @@ export async function POST(req: NextRequest) {
         {
           role: 'user',
           /** Prompt */
-          // content: `
-          //   Act as an expert Computer Engineer. You are going to interview a ${position} 
-          //   with ${experience} experience. Your task is to generate current, interesting, and relevant questions 
-          //   commonly for job interviews. 
-          //   The questions should focus on the following technologies: ${technologiesArray}.
-
-          //   Important generate questions for this ${technologiesArray.length} technologies.
-          //   Important generate only five questions in total.
-
-          //   To structure the questions:
-
-          //   - If there are 5 technologies: generate one question for each technology.
-          //   - If there are 4 technologies: generate two questions for the first technology and one question for each 
-          //     of the remaining technologies.
-          //   - If there are 3 technologies: generate two questions for the first and second technologies and one question for 
-          //     each of the other technology.
-          //   - If there are 2 technologies: generate three questions for the first technology and two for the second.
-          //   - If there is 1 technology: generate five questions for that technology.
-
-          //   Formatting instructions:
-          //   Return the result as a single-line JSON array. Each question must be represented as an object with the keys: 
-          //   "technology", "key",  "question" and "answer". 
-
-          //   The format must look exactly like this, without line breaks or escape characters: 
-          //   [{ "key": 1, "technology": "React", "question": "AI-generated question", "answer": "" }, 
-          //    { "key": 2, "technology": "JavaScript", "question": "Another question", "answer": "" }...]
-          // `
           content: `
-            es importante que generes dos preguntas muy corta preguntas de programacion con estas caraceristicas: 
-            dentro de una array: [{ "key": 1, "technology": "React", "question": "Pregunta a generar por IA", "answer": ""]
-            Importante: 
-            - No añadas texto adicional, solo el array y q no sea un string
-            - El array debe ser igual que el ejemplo, no tiene que haber saltos de linea ni caracteres especiales
+            Act as an expert Computer Engineer. You are going to interview a ${position} 
+            with ${experience} experience. Your task is to generate current, interesting, and relevant questions 
+            commonly for job interviews. 
+            The questions should focus on the following technologies: ${technologiesArray}.
+
+            Important generate questions for this ${technologiesArray.length} technologies.
+            Important generate only five questions in total.
+
+            To structure the questions:
+
+            - If there are 5 technologies: generate one question for each technology.
+            - If there are 4 technologies: generate two questions for the first technology and one question for each 
+              of the remaining technologies.
+            - If there are 3 technologies: generate two questions for the first and second technologies and one question for 
+              each of the other technology.
+            - If there are 2 technologies: generate three questions for the first technology and two for the second.
+            - If there is 1 technology: generate five questions for that technology.
+
+            Formatting instructions:
+            Return the result as a single-line JSON array. Each question must be represented as an object with the keys: 
+            "technology", "key",  "question" and "answer". 
+
+            The format must look exactly like this, without line breaks or escape characters: 
+            [{ "key": 1, "technology": "React", "question": "AI-generated question", "answer": "" }, 
+             { "key": 2, "technology": "JavaScript", "question": "Another question", "answer": "" }...]
           `
         }
       ],
@@ -95,39 +88,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Error processing request' }, { status: 500 })
   }
 }
-
-const MOCK_QUESTIONS = [
-  {
-    "key": 1,
-    "technology": "React",
-    "question": "Can you explain the difference between a controlled component and an uncontrolled component in React?",
-    "answer": ""
-  },
-  {
-    "key": 2,
-    "technology": "React",
-    "question": "How do you manage state in a large React application, and what tools or libraries have you used to help with state management?",
-    "answer": ""
-  },
-  {
-    "key": 3,
-    "technology": "Next.js",
-    "question": "What are the advantages of using Next.js for server-side rendering compared to client-side rendering?",
-    "answer": ""
-  },
-  {
-    "key": 4,
-    "technology": "TypeScript",
-    "question": "How does TypeScript improve the development experience compared to plain JavaScript, particularly in terms of type safety and code maintenance?",
-    "answer": ""
-  },
-  {
-    "key": 5,
-    "technology": "Node.js",
-    "question": "What is the event loop in Node.js, and how does it contribute to the non-blocking nature of Node.js applications?",
-    "answer": ""
-  }
-]
 
 /**
  * PARAMETER API MODEL

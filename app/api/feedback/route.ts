@@ -9,12 +9,13 @@ export async function POST(req: NextRequest) {
     await connectMongoDB()
 
     const { position, experience, questions, email } = await req.json()
+
     const userFind = await UserModel.findOne({ email })
 
 
     let userId
     if (userFind) {
-      userId = userFind._id.toString()  // Convertir ObjectId a string
+      userId = userFind._id.toString()
     }
     console.log({ position, experience, questions, email, userFind, userId })
 

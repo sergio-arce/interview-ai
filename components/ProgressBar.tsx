@@ -1,14 +1,14 @@
 import { Box, Typography, useTheme } from '@mui/material'
 
 interface IProgressBar {
-  text1: string
-  text2: string
-  text3: string
+  lowLabel: string
+  midLabel: string
+  highLabel: string
   value: number
   fontSize?: number
 }
 
-export const ProgressBar = ({ text1, text2, text3, value, fontSize = 12 }: IProgressBar) => {
+export const ProgressBar = ({ lowLabel, midLabel, highLabel, value, fontSize = 12 }: IProgressBar) => {
   const theme = useTheme()
 
   const gray = theme.palette.grey[300]
@@ -42,9 +42,9 @@ export const ProgressBar = ({ text1, text2, text3, value, fontSize = 12 }: IProg
         <div style={{ height: 6, width: '100%', background: color3, borderRadius: 5 }} />
       </div>
       <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
-        <Typography sx={{ color: textColor1, fontSize }}>{text1}</Typography>
-        <Typography sx={{ color: textColor2, fontSize }}>{text2}</Typography>
-        <Typography sx={{ color: textColor3, fontSize }}>{text3}</Typography>
+        <Typography sx={{ color: textColor1, fontSize }}>{lowLabel}</Typography>
+        <Typography sx={{ color: textColor2, fontSize }}>{midLabel}</Typography>
+        <Typography sx={{ color: textColor3, fontSize }}>{highLabel}</Typography>
       </Box>
     </Box>
   )

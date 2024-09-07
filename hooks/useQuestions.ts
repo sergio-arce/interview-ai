@@ -89,9 +89,9 @@ export const useQuestions = () => {
           },
           body: JSON.stringify({ position, experience, questions, email: session?.user?.email }),
         })
-        // TODO: desomentar estas dos lineas
-        // localStorage.removeItem('questions')
-        // localStorage.removeItem('currentIndex')
+
+        localStorage.removeItem('questions')
+        localStorage.removeItem('currentIndex')
         router.push('/interview-feedback')
       } catch (error) {
         console.error("Error submitting feedback:", error)
