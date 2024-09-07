@@ -1,14 +1,13 @@
 'use client'
 
-import { Stack, Accordion, AccordionDetails, Box, Typography, Button } from '@mui/material';
+import { Stack, Accordion, AccordionDetails, Box, Typography } from '@mui/material';
 
 import useFeedback from '@/hooks/useFeedback'
 import { UserProfile, Summary, FeedbackDetail, OverallAssestment, NoInterviews } from '@/components/feedback'
 
 const InterviewFeedback = () => {
 
-  const { feedbacks, loading, error } = useFeedback()
-
+  const { feedbacks, loading } = useFeedback()
 
   return (
     <Box sx={{ margin: 6, marginTop: 15, minHeight: '63vh' }}>

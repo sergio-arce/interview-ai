@@ -2,22 +2,12 @@ import { NextRequest, NextResponse } from "next/server"
 import { openai } from "@/utils/openai"
 import { connectMongoDB } from "@/lib"
 import { FeedbackModel } from "@/models/Feedback"
-import { UserModel } from "@/models/User"
 
 export async function POST(req: NextRequest) {
   try {
     await connectMongoDB()
 
-    const { position, experience, questions, email } = await req.json()
-
-    const userFind = await UserModel.findOne({ email })
-
-
-    let userId
-    if (userFind) {
-      userId = userFind._id.toString()
-    }
-    console.log({ position, experience, questions, email, userFind, userId })
+    const { position, experience, questions, userId } = await req.json()
 
     const response = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
@@ -88,9 +78,9 @@ export async function POST(req: NextRequest) {
     if (content) {
       const feedback = JSON.parse(content)
 
-      // Almacenar en la base de datos
+      // create new feedback
       const newFeedback = new FeedbackModel({
-        user: userId, // Asegúrate de tener el ID del usuario en la solicitud
+        user: userId,
         date: new Date(),
         position,
         experience,
@@ -98,7 +88,8 @@ export async function POST(req: NextRequest) {
         overallAssessment: feedback.overallAssessment
       })
 
-      await newFeedback.save() // Guarda el feedback en la base de datos
+      // Save new feedback
+      await newFeedback.save()
 
       return NextResponse.json({ feedback }, { status: 200 })
     } else {

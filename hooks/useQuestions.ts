@@ -22,8 +22,6 @@ export const useQuestions = () => {
   const [isError, setIsError] = useState<boolean>(false)
 
   const { data: session } = useSession()
-  console.log('SESSION', session)
-
 
   const router = useRouter()
 
@@ -87,13 +85,14 @@ export const useQuestions = () => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ position, experience, questions, email: session?.user?.email }),
+          body: JSON.stringify({ position, experience, questions, userId: session?.user?.userId }),
         })
 
         localStorage.removeItem('questions')
         localStorage.removeItem('currentIndex')
         router.push('/interview-feedback')
       } catch (error) {
+        toastError({ message: "There was an error making the API call" })
         console.error("Error submitting feedback:", error)
       } finally {
         setIsLoading(false)

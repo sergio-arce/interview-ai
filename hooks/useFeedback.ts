@@ -22,12 +22,7 @@ const useFeedback = () => {
       setLoading(false)
       return
     }
-
-    const userId = (session.user as any)._id
-    if (!userId) {
-      setLoading(false)
-      return
-    }
+    const userId = session?.user?.userId
 
     const fetchFeedback = async () => {
       try {
@@ -39,12 +34,13 @@ const useFeedback = () => {
         const { feedbacks } = await response.json()
         setFeedbacks(feedbacks)
 
-      } catch (error: any) {
-        setError(error.message)
-      } finally {
         setTimeout(() => {
           setLoading(false)
-        }, 2000)
+        }, 4000)
+
+      } catch (error: any) {
+        setError(error.message)
+        setLoading(false)
       }
     }
 

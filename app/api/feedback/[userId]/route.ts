@@ -12,7 +12,7 @@ export const GET = async (req: NextRequest, { params }: IParams) => {
   try {
     await connectMongoDB()
     const { userId } = params
-    const feedbacks = await FeedbackModel.find({ user: userId })
+    const feedbacks = await FeedbackModel.find({ user: userId }).sort({ date: -1 })
 
     if (!feedbacks) {
       return NextResponse.json({ message: 'Feedback not found' }, { status: 404 })

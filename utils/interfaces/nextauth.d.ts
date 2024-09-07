@@ -7,7 +7,7 @@ import { SessionStatus } from "next-auth/react";
 declare module "next-auth" {
   interface User {
     email: string;
-    id: string;
+    userId: string;
     image: string
     name: string
   }
