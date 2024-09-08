@@ -11,14 +11,12 @@ import {
   Tooltip,
   MenuItem,
 } from '@mui/material'
-import { keyframes } from '@emotion/react'
 import IconButton from '@mui/material/IconButton'
 import { signOut, useSession } from 'next-auth/react'
 import { usePathname, useRouter } from 'next/navigation'
 import MenuIcon from '@mui/icons-material/Menu'
-import { Logo } from './Logo';
+import { Logo } from './Logo'
 
-const pages = ['home', "blog", 'login']
 const settings = ['Profile', 'Logout']
 
 export const AppBar = () => {
@@ -27,7 +25,9 @@ export const AppBar = () => {
   const { data: session } = useSession()
   const router = useRouter()
   const pathname = usePathname()
-  console.log({ session, pathname }) // Todo: delete
+  console.log({ session })
+
+  const pages = session ? ['blog', 'interview', 'feedbacks'] : ['blog', 'login']
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget)
@@ -91,33 +91,51 @@ export const AppBar = () => {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                (page !== 'home' || shouldShowHome) && (page !== 'login' || shouldShowLogin) &&
-                <MenuItem key={page} onClick={() => handleCloseNavMenu(page)}>
-                  <Typography sx={{ textTransform: 'capitalize', textAlign: 'center' }}>{page}</Typography>
-                </MenuItem>
-              ))}
+              {pages.map((page) => {
+                let pageUrl = page
+                if (page === 'interview') {
+                  pageUrl = 'interview-settings'
+                }
+                if (page === 'feedbacks') {
+                  pageUrl = 'interview-feedback'
+                }
+                return (
+                  (page !== 'home' || shouldShowHome) && (page !== 'login' || shouldShowLogin) &&
+                  <MenuItem key={page} onClick={() => handleCloseNavMenu(pageUrl)}>
+                    <Typography sx={{ textTransform: 'capitalize', textAlign: 'center' }}>{page}</Typography>
+                  </MenuItem>
+                )
+              })}
             </Menu>
           </Box>
           {/* Logo mobile */}
           <Logo fontSize={14} display={{ xs: 'flex', md: 'none' }} />
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              (page !== 'home' || shouldShowHome) && (page !== 'login' || shouldShowLogin) &&
-              <Button
-                key={page}
-                onClick={() => handleCloseNavMenu(page)}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
+            {pages.map((page) => {
+              let pageUrl = page
+              if (page === 'interview') {
+                pageUrl = 'interview-settings'
+              }
+              if (page === 'feedbacks') {
+                pageUrl = 'interview-feedback'
+              }
+              return (
+                (page !== 'home' || shouldShowHome) && (page !== 'login' || shouldShowLogin) &&
+                <Button
+                  key={page}
+                  onClick={() => handleCloseNavMenu(pageUrl)}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  {page}
+                </Button>
+              )
+            })}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                {!['/login', '/register', '/'].includes(pathname) && <Avatar alt="User image" src={session?.user?.image} />}
+                {session && <Avatar alt="User image" src={session?.user?.image} />}
               </IconButton>
             </Tooltip>
             <Menu
@@ -148,16 +166,3 @@ export const AppBar = () => {
     </AppBarMU>
   )
 }
-
-// Animation
-const glowAnimation = keyframes`
-  0% {
-    text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.7)
-  }
-  50% {
-    text-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2)
-  }
-  100% {
-    text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.7)
-  }
-`
