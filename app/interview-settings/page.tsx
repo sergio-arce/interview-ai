@@ -23,7 +23,7 @@ const MenuProps = {
   },
 }
 
-const positions = ['Front End Developer', 'Back End Developer']
+const positions = ['Front End Developer', 'Back End Developer', 'DevOps', "Full Stack Developer", "Software Architect", "Android Developer", "iOS Developer", "Data Scientist"]
 const experiences = ['Junior', 'Middle', 'Senior']
 
 export default function InterviewSettings() {
@@ -38,17 +38,17 @@ export default function InterviewSettings() {
   const [checked, setChecked] = useState<boolean>(false)
   const router = useRouter()
 
-  const onSubmitPosition = handleSubmit(({ position, experience }) => {
-    fetch('/api/technologies', {
-      method: 'POST',
+  const onSubmitPosition = handleSubmit(({ position }) => {
+    fetch(`/api/technologies/${position}`, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ position, experience })
+
     })
       .then(data => data.json())
       .then(({ technologies }) => {
-        setTecnologiesData(technologies.split(', '))
+        setTecnologiesData(technologies)
         setChecked(true)
       })
       .catch(error => console.log("Error ", error))
