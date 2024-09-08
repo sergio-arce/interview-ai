@@ -80,7 +80,7 @@ export const useQuestions = () => {
     if (questions) {
       setIsLoading(true)
       try {
-        await fetch('/api/feedback', {
+        const res = await fetch('/api/feedback', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -88,9 +88,18 @@ export const useQuestions = () => {
           body: JSON.stringify({ position, experience, questions, userId: session?.user?.userId }),
         })
 
-        localStorage.removeItem('questions')
-        localStorage.removeItem('currentIndex')
-        router.push('/interview-feedback')
+        console.log({ res })
+
+        if (res.ok) {
+          // clear storage
+          localStorage.removeItem('questions')
+          localStorage.removeItem('currentIndex')
+          // redirect page
+          router.push('/interview-feedback')
+        } else {
+          toastError({ message: "There was an error making the API call. Please try again." })
+        }
+
       } catch (error) {
         toastError({ message: "There was an error making the API call" })
         console.error("Error submitting feedback:", error)

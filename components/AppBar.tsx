@@ -43,9 +43,14 @@ export const AppBar = () => {
   }
 
   const handleCloseUserMenu = (item: string) => {
+
     if (item === 'Logout') {
+      // clear storage
+      localStorage.removeItem('questions')
+      localStorage.removeItem('currentIndex')
       signOut({ callbackUrl: '/' })
     }
+
     if (item === 'Profile') {
       console.log('profile') // Todo: Add pagge
     }

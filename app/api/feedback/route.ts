@@ -93,7 +93,8 @@ export async function POST(req: NextRequest) {
 
       return NextResponse.json({ feedback }, { status: 200 })
     } else {
-      throw new Error('Contenido de respuesta no válido')
+      // throw new Error('Contenido de respuesta no válido')
+      return NextResponse.json({ error: 'Contenido de la respusta no valido' }, { status: 400 })
     }
 
   } catch (error) {
