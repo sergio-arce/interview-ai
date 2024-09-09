@@ -40,8 +40,10 @@ export async function POST(req: NextRequest) {
 
           **Importante**:
           1. No añadas texto adicional fuera del formato solicitado.
-          2. Mantén los campos originales como **key**, **question**, **technology**, **answer** en cada pregunta.
-          3. Devuelve los datos en el siguiente formato de JSON:
+          2. Todas las respuestas deberían estar en Ingles.
+          3. Mantén los campos originales como **key**, **question**, **technology**, **answer** en cada pregunta.
+          4. Devuelve solo los datos en formato JSON sin texto adicional ni formato markdown.
+          5. Es extremadamente importante que devuelve los datos en el siguiente formato de JSON:
             
           {
             "detailedFeedback": [
@@ -75,8 +77,10 @@ export async function POST(req: NextRequest) {
     })
 
     const content = response.choices[0].message.content
-    if (content) {
-      const feedback = JSON.parse(content)
+    const cleanContent = content?.replace(/```json\n|\n```/g, '') // Elimina notaciones de markdown si hubiera
+    console.log({ cleanContent })
+    if (cleanContent) {
+      const feedback = JSON.parse(cleanContent)
 
       // create new feedback
       const newFeedback = new FeedbackModel({

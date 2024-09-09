@@ -1,6 +1,6 @@
 'use client'
 
-import { Stack, Accordion, AccordionDetails, Box, Typography } from '@mui/material';
+import { Stack, Accordion, AccordionDetails, Box, Typography, CircularProgress } from '@mui/material';
 
 import useFeedback from '@/hooks/useFeedback'
 import { UserProfile, Summary, FeedbackDetail, OverallAssestment, NoInterviews } from '@/components/feedback'
@@ -55,6 +55,7 @@ const InterviewFeedback = () => {
         {/* LOADING */}
         {loading && (
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '30vh' }}>
+            <CircularProgress />
             <p>Loading...</p>
           </Box>
         )}

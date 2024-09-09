@@ -12,5 +12,5 @@ export const formatDate = (isoString: string) => {
   const minutes = date.getMinutes().toString().padStart(2, '0')
 
   // format return "DD/MM/YYYY - HH:mmhr"
-  return `${day}/${month}/${year} - ${hours}:${minutes}hr`
+  return `${day}/${month}/${year} - ${hours}:${minutes}h`
 }

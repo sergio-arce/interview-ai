@@ -1,7 +1,7 @@
 
 'use client'
 
-import { Button, Box, Stack, TextField, Typography } from '@mui/material'
+import { Button, Box, Stack, TextField, Typography, CircularProgress } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { useQuestions } from '@/hooks/useQuestions'
 
@@ -36,6 +36,7 @@ export default function Interview() {
   if (isLoading) {
     return (
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '90vh' }}>
+        <CircularProgress />
         <p>Loading...</p>
       </Box>
 
@@ -62,7 +63,7 @@ export default function Interview() {
         <Typography sx={{ fontSize: 14 }}><i>Experience: <b>{experience}</b></i></Typography>
       </Stack>
       <Stack width={900}>
-        <Typography sx={{ my: 4, fontSize: 25 }}><b>{questions[currentIndex].key}. </b>{questions[currentIndex].question}</Typography>
+        <Typography sx={{ my: 4, fontSize: 25 }}><b>{`${questions[currentIndex].key}/5`}. </b>{questions[currentIndex].question}</Typography>
       </Stack>
       <form onSubmit={onSubmitAnswer}>
         <Stack spacing={2} width={600}>
