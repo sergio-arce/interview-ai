@@ -3,27 +3,6 @@ import { openai } from "@/utils/openai"
 import { connectMongoDB } from "@/lib"
 import { FeedbackModel } from "@/models/Feedback"
 
-const overallAssessment = {
-  overallScore: {
-    description: 'Description example.',
-    puntuation: 1
-  },
-  roleRelatedKnowledge: 1,
-  problemSolving: 1,
-  communication: 1,
-  criticalThinking: 1,
-  adaptability: 1,
-  teamwork: 1
-}
-
-function mergeQuestionsWithFeedbacks(questions: any, feedback: any) {
-  return questions.map((question: any) => {
-    let correspondingFeedback = feedback.find((fb: any) => fb.key === question.key);
-    return { ...question, ...correspondingFeedback };
-  });
-}
-
-
 export async function POST(req: NextRequest) {
   try {
     await connectMongoDB()
@@ -50,10 +29,20 @@ export async function POST(req: NextRequest) {
               - 4 a 7: Respuesta aceptable
               - 8 a 10: Respuesta excelente
 
+            **Overall Assessment**:
+            Con base en todas las respuestas, proporciona un análisis general en el formato JSON:
+            1. **overallScore**: Puntuación general del rendimiento del usuario con una descripción breve y clara.
+            2. **roleRelatedKnowledge**: Evalúa el conocimiento relacionado con el rol (escala del 1 al 10).
+            3. **problemSolving**: Evalúa la capacidad de resolver problemas (escala del 1 al 10).
+            4. **communication**: Evalúa las habilidades de comunicación (escala del 1 al 10).
+            5. **criticalThinking**: Evalúa el pensamiento crítico (escala del 1 al 10).
+            6. **adaptability**: Evalúa la adaptabilidad (escala del 1 al 10).
+            7. **teamwork**: Evalúa las habilidades de trabajo en equipo (escala del 1 al 10).
+
             **Importante**:
             1. No añadas texto adicional fuera del formato solicitado.
             2. Todas las respuestas deberían estar en Ingles.
-            3. Mantén los campos originales como **key**, **feedback**, **puntuation**, en cada pregunta y **improvement** que sea un string vacío.
+            3. Mantén los campos originales como **key**, **question**, **technology**, **answer** en cada pregunta.
             4. Devuelve solo los datos en formato JSON sin texto adicional ni formato markdown.
             5. Es extremadamente importante que devuelve los datos en el siguiente formato de JSON:
 
@@ -61,11 +50,26 @@ export async function POST(req: NextRequest) {
               "detailedFeedback": [
                 {
                   "key": number,
+                  "question": "",
+                  "technology": "",
+                  "answer": "",
                   "feedback": "",
                   "improvement": "",
                   "puntuation": number
                 }
-              ]
+              ],
+              "overallAssessment": {
+                "overallScore": {
+                  "description": "",
+                  "puntuation": number
+                },
+                "roleRelatedKnowledge": number,
+                "problemSolving": number,
+                "communication": number,
+                "criticalThinking": number,
+                "adaptability": number,
+                "teamwork": number
+              }
             }
           `
         }
@@ -85,8 +89,8 @@ export async function POST(req: NextRequest) {
         date: new Date(),
         position,
         experience,
-        detailedFeedback: mergeQuestionsWithFeedbacks(questions, feedback.detailedFeedback),
-        overallAssessment
+        detailedFeedback: feedback.detailedFeedback,
+        overallAssessment: feedback.overallAssessment
       })
 
       // // Save new feedback
@@ -103,70 +107,3 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Error al procesar la solicitud' }, { status: 500 })
   }
 }
-
-
-/**
- * Este prompt está diseñado para generar feedback y evaluaciones en formato JSON. 
- * Se debe dividir en dos apartados: `detailedFeedback` y `overallAssessment`.
- * 
- * En el entorno de desarrollo, el prompt funciona correctamente, pero en producción, 
- * especialmente con el plan gratuito de Vercel, se presentan problemas de latencia.
- * Las llamadas a la API pueden tardar entre 15 y 20 segundos, lo que provoca errores 
- * y fallos debido a la alta latencia del entorno de producción.
- * 
- * Se recomienda subdividir el prompt en dos secciones para mitigar estos problemas 
- * y mejorar el rendimiento en el entorno de producción.
- */
-const prompt_initial = `
-  **Detailed Feedback**:
-  Para cada pregunta, genera el siguiente feedback en el formato JSON:
-  1. **feedback**: Analiza si la respuesta es acorde a la pregunta y si está bien fundamentada.
-  2. **improvement**: Si hay áreas de mejora en la respuesta, descríbelas brevemente. Si no es necesario, deja este campo vacío.
-  3. **puntuation**: Califica la respuesta del usuario de acuerdo con la siguiente escala:
-    - 1 a 3: Respuesta deficiente
-    - 4 a 7: Respuesta aceptable
-    - 8 a 10: Respuesta excelente
-
-  **Overall Assessment**:
-  Con base en todas las respuestas, proporciona un análisis general en el formato JSON:
-  1. **overallScore**: Puntuación general del rendimiento del usuario con una descripción breve y clara.
-  2. **roleRelatedKnowledge**: Evalúa el conocimiento relacionado con el rol (escala del 1 al 10).
-  3. **problemSolving**: Evalúa la capacidad de resolver problemas (escala del 1 al 10).
-  4. **communication**: Evalúa las habilidades de comunicación (escala del 1 al 10).
-  5. **criticalThinking**: Evalúa el pensamiento crítico (escala del 1 al 10).
-  6. **adaptability**: Evalúa la adaptabilidad (escala del 1 al 10).
-  7. **teamwork**: Evalúa las habilidades de trabajo en equipo (escala del 1 al 10).
-
-  **Importante**:
-  1. No añadas texto adicional fuera del formato solicitado.
-  2. Todas las respuestas deberían estar en Ingles.
-  3. Mantén los campos originales como **key**, **question**, **technology**, **answer** en cada pregunta.
-  4. Devuelve solo los datos en formato JSON sin texto adicional ni formato markdown.
-  5. Es extremadamente importante que devuelve los datos en el siguiente formato de JSON:
-
-  {
-    "detailedFeedback": [
-      {
-        "key": number,
-        "question": "",
-        "technology": "",
-        "answer": "",
-        "feedback": "",
-        "improvement": "",
-        "puntuation": number
-      }
-    ],
-    "overallAssessment": {
-      "overallScore": {
-        "description": "",
-        "puntuation": number
-      },
-      "roleRelatedKnowledge": number,
-      "problemSolving": number,
-      "communication": number,
-      "criticalThinking": number,
-      "adaptability": number,
-      "teamwork": number
-    }
-  }
-`
