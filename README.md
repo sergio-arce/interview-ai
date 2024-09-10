@@ -64,16 +64,16 @@ Sigue los pasos para instalar y configurar el proyecto en tu entorno local.
 3. Crea un archivo .env.local en la raíz del proyecto con la siguiente información:
     ```bash
     OPENAI_API_KEY=your_openai_api_key
-    NEXTAUTH_URL=http://localhost:3000
+    NEXTAUTH_URL=http://localhost:3000/
+    NEXTAUTH_SECRET=XXXXXX
     MONGODB_URI=your_mongodb_uri
     GITHUB_ID=XXXXXX
     GITHUB_SECRET=XXXXXX
-    NEXTAUTH_SECRET=XXXXXX
-    NEXTAUTH_URL=http://localhost:3000/
+    GOOGLE_CLIENT_ID=XXXXXX
+    GOOGLE_CLIENT_SECRET=XXXXXX
     JWT_SECRET=XXXXXX
     JWT_EXPIRATION_TIME=86400
     PASSWORD_REGISTER=XXXXXX
-    NEXT_PUBLIC_API_URL=http://localhost:3000/
     ```
 
 4. Inicia el servidor de desarrollo:
