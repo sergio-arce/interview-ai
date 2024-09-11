@@ -34,11 +34,21 @@ La plataforma desarrollada utiliza **Inteligencia Artificial (IA)**, específica
   - [GitHub](https://github.com/sergio-arce/interview-ai) para el control de versiones y almacenamiento del código fuente.
 
 - **Arquitectura modelo cliente-servidor**:
+
 ![](/public/arquitectura-cliente-servidor.png)
+
+- **Diagrama de clases**:
+A continuación se muestra el diagrama de clases que representa la estructura de los datos en la plataforma, basado en los modelos de MongoDB para las entidades **User**, **Technology** y **Feedback**.
+
+![](/public/diagrama-classes.png)
+
 
 ## Documentación del Proyecto
 
-La memoria completa puedes encontrarla [aquí](./memoria/tfg-memoria.pdf).
+Puedes probar la plataforma en vivo accediendo a la **[Live Demo](https://interview-ai-navy.vercel.app/)**.
+
+La memoria completa puedes encontrarla [Aquí](./memoria/TFG_Sergio_Arce_Chijo.pdf).
+
 
 ## Instalación y Configuración
 
@@ -99,7 +109,7 @@ Secciones:
 3. Preguntas Frecuentes (FAQs)
 4. Testimonios de Usuarios
 
-![](/public/image.png)
+![](/public/home.png)
 
 #### Inicio de sesión y registro 
 Los usuarios pueden registrarse en la plataforma y luego iniciar sesión utilizando credenciales tradicionales o a través de servicios de terceros, como GitHub y Google, gracias a la integración con NextAuth. Esto les permite acceder fácilmente a todas las funcionalidades de la plataforma de manera segura y conveniente.
